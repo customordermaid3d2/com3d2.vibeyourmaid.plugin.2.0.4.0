@@ -1376,6 +1376,8 @@ namespace CM3D2.VibeYourMaid.Plugin
                 majEnabled = true;
                 majItemClear = true;
                 majKupaEnabled = true;
+
+                faceUse = true;
             }
             public string[][] sFaceAnime20Vibe;
             public string[][] sFaceAnime30Vibe;
@@ -1468,6 +1470,7 @@ namespace CM3D2.VibeYourMaid.Plugin
             public bool majKupaEnabled;
             public bool uDatsuEnabled;
             public bool osawariEnabled;
+            public bool faceUse;
         }
 
         private GameObject gameObject_ui;
@@ -3755,6 +3758,10 @@ namespace CM3D2.VibeYourMaid.Plugin
         private void ChangeFaceAnime(int maidID)
         {
 
+            #region 얼굴 효과 사용 여부
+            if (!cfgw.faceUse) return;
+            #endregion
+
             Maid maid = stockMaids[maidID].mem;
             int iRandomFace = 0;
             string faceAnimeName = "";
@@ -3810,6 +3817,9 @@ namespace CM3D2.VibeYourMaid.Plugin
         //フェイスブレンド変更処理
         private void ChangeFaceBlend(int maidID)
         {
+            #region 얼굴 효과 사용 여부
+            if (!cfgw.faceUse) return;
+            #endregion
 
             Maid maid = stockMaids[maidID].mem;
 
@@ -11286,8 +11296,11 @@ namespace CM3D2.VibeYourMaid.Plugin
 
             if (ConfigFlag == 1)
             {
+                #region 각 연출의 유무
                 //一列目
-                GUI.Label(new Rect(5, 35, 190, 20), "【各演出の有無】", gsLabel);
+                GUI.Label(new Rect(5, 35, 120, 20), "【各演出の有無】", gsLabel);
+
+                cfgw.faceUse = GUI.Toggle(new Rect(125, 35, 40, 20), cfgw.faceUse, "사용", gsToggle);
 
                 cfgw.HohoEnabled = GUI.Toggle(new Rect(5, 55, 55, 20), cfgw.HohoEnabled, "頬染め", gsToggle);
                 cfgw.NamidaEnabled = GUI.Toggle(new Rect(80, 55, 40, 20), cfgw.NamidaEnabled, "涙", gsToggle);
@@ -11299,6 +11312,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                 cfgw.OrgsmAnimeEnabled = GUI.Toggle(new Rect(5, 115, 75, 20), cfgw.OrgsmAnimeEnabled, "痙攣動作", gsToggle);
                 cfgw.AheEnabled = GUI.Toggle(new Rect(80, 115, 115, 20), cfgw.AheEnabled, "瞳上昇（アヘ）", gsToggle);
                 cfgw.zViceWaitEnabled = GUI.Toggle(new Rect(5, 135, 190, 20), cfgw.zViceWaitEnabled, "絶頂時に音声終了を待つ", gsToggle);
+                #endregion
 
                 GUI.Label(new Rect(5, 165, 190, 20), "【メイド切替時の設定】", gsLabel);
                 cfgw.TaikiEnabled = GUI.Toggle(new Rect(5, 185, 190, 20), cfgw.TaikiEnabled, "余韻状態にする", gsToggle);

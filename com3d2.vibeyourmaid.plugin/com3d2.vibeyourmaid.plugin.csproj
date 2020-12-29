@@ -62,5 +62,8 @@
   <ItemGroup>
     <Analyzer Include="F:\COM3D2\COM3D2x64_Data\Managed\Assembly-CSharp-firstpass.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="comfile.cmd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
