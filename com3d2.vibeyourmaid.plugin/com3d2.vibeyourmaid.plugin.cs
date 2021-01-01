@@ -1227,7 +1227,7 @@ namespace CM3D2.VibeYourMaid.Plugin
 
 
 
-        //GUIで設定保存したい変数はここ
+        //GUIで設定保存したい変数はここ GUI에서 설정 저장할 변수는 여기
         public class VibeYourMaidCfgWriting
         {  //@API実装//→API用にpublicに変更
 
@@ -1377,7 +1377,9 @@ namespace CM3D2.VibeYourMaid.Plugin
                 majItemClear = true;
                 majKupaEnabled = true;
 
-                faceUse = true;
+                // by lilly
+                faceUse = true; // 페이스 효과 표현 여부 설정
+                dressUse = true; // 라이프모드 탈의 효과 표현 여부 설정
             }
             public string[][] sFaceAnime20Vibe;
             public string[][] sFaceAnime30Vibe;
@@ -1470,7 +1472,9 @@ namespace CM3D2.VibeYourMaid.Plugin
             public bool majKupaEnabled;
             public bool uDatsuEnabled;
             public bool osawariEnabled;
+
             public bool faceUse;
+            public bool dressUse;
         }
 
         private GameObject gameObject_ui;
@@ -1728,9 +1732,9 @@ namespace CM3D2.VibeYourMaid.Plugin
             //アクティブなメイドさんのIDを取得
             VisibleMaidCheck();
 
-            //エンパイアズライフのフラグ初期化
+            //エンパイアズライフのフラグ初期化 엠파이어 즈 라이프의 플래그 초기화
             lifeStart = 0;
-            if (vSceneLevel == 3) gameObject_ui = GameObject.Find("UI Root"); //UIオブジェクトの取得
+            if (vSceneLevel == 3) gameObject_ui = GameObject.Find("UI Root"); //UIオブジェクトの取得.UI 오브젝트의 취득
 
 
             //男モデル取得
@@ -1816,7 +1820,11 @@ namespace CM3D2.VibeYourMaid.Plugin
                 }
             }
 
-            if (cfgw.bPluginEnabledV && cfgw.mainGuiFlag > 0 && lifeStart > 0 && !elFade) node5 = GUI.Window(5, node5, WindowCallback5, "エンパイアズライフ", gsWin);
+            //엠파이어 즈 라이프 모드
+            if (cfgw.bPluginEnabledV && cfgw.mainGuiFlag > 0 && lifeStart > 0 && !elFade)
+            {
+                node5 = GUI.Window(5, node5, WindowCallback5, "エンパイアズライフ"+, gsWin);
+            }
 
         }
         //--------------------------------------------
@@ -1982,7 +1990,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                     }
 
 
-                    //音声の変更処理
+                    //音声の変更処理 음성 변경 처리
                     if (maidsState[maidID].voiceHoldTime <= 0 && (maidsState[maidID].orgasmVoice != 2 || !cfgw.zViceWaitEnabled) && (stockMaids[maidID].mem.AudioMan.audiosource.loop || !stockMaids[maidID].mem.AudioMan.audiosource.isPlaying || lifeStart != 0))
                     {
                         MaidVoicePlay(maidID);  //音声変更実行
@@ -2080,11 +2088,12 @@ namespace CM3D2.VibeYourMaid.Plugin
             }
 
 
-            //エンパイアズライフ開始
+            //エンパイアズライフ開始.엠파이어 즈 라이프
             if (Input.GetKeyDown(cfgw.keyPluginToggleV11) && vSceneLevel == 3)
             {
 
                 //背景が存在するかどうかチェック
+                //배경이 존재하는지 여부 확인
                 UnityEngine.Object @object = GameMain.Instance.BgMgr.CreateAssetBundle("Shitsumu_ChairRot");
                 if (@object == null)
                 {
@@ -11415,14 +11424,14 @@ namespace CM3D2.VibeYourMaid.Plugin
                   ConfigFlag = 7;
                 }
                 */
-                if (GUI.Button(new Rect(420, 240, 190, 20), "エロステータス表示", gsButton))
+                if (GUI.Button(new Rect(420, 240, 190, 20), "エロステータス表示", gsButton))//에로 상태 표시
                 {
                     ConfigFlag = 8;
                 }
 
 
 
-                GUI.Label(new Rect(415, 300, 150, 20), "【その他特殊操作】", gsLabel);
+                GUI.Label(new Rect(415, 300, 150, 20), "【その他特殊操作】", gsLabel);//기타 특수 작업
 
                 if (vSceneLevel == 3)
                 {
@@ -12338,7 +12347,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                 }
                 if (ExSaveData.Contains(maid, "CM3D2.VibeYourMaid.Plugin", "3_acchat")) ds_Overwrite[2] = GUI.Toggle(new Rect(505, 240, 70, 20), ds_Overwrite[2], "上書", gsToggle);
 
-                if (GUI.Button(new Rect(410, 265, 85, 20), "衣装４", gsButton))
+                if (GUI.Button(new Rect(410, 265, 85, 20), "衣装４", gsButton))//의상 4
                 {
                     if (ExSaveData.Contains(maid, "CM3D2.VibeYourMaid.Plugin", "4_acchat") && !ds_Overwrite[3])
                     {
@@ -12702,7 +12711,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                     GUI.EndScrollView();
 
 
-                    GUI.Label(new Rect(205, 330, 200, 20), "【メインメイドを移動】", gsLabel);
+                    GUI.Label(new Rect(205, 330, 200, 20), "【メインメイドを移動】", gsLabel);//메인 메이드 이동
 
                     vm = maid.transform.position;
                     vml = maid.transform.localPosition;
@@ -12787,7 +12796,7 @@ namespace CM3D2.VibeYourMaid.Plugin
 
 
 
-            //エンパイアズライフ設定画面
+            //エンパイアズライフ設定画面//엠파이어 즈 라이프 설정 화면
             if (ConfigFlag == 7)
             {
                 x = 0;
@@ -12898,7 +12907,7 @@ namespace CM3D2.VibeYourMaid.Plugin
 
 
 
-                //ライフセット編集画面
+                //ライフセット編集画面 라이프 세트 편집 화면
                 x = 220;
                 y = 50;
 
@@ -13281,7 +13290,7 @@ namespace CM3D2.VibeYourMaid.Plugin
 
 
 
-        //エンパイアズライフ用GUI
+        //エンパイアズライフ用GUI 엠파이어 즈 라이프 용 GUI
         private int ElGuiFlag = 0;
         private GUIStyleState styleState;
         Vector2 elScrollPos = Vector2.zero;
@@ -13463,6 +13472,8 @@ namespace CM3D2.VibeYourMaid.Plugin
                 if (cfgw.ntrBlock) GUI.Label(new Rect(580, y, 35, 20), "ON", gsLabel);
                 if (!cfgw.ntrBlock) GUI.Label(new Rect(580, y, 35, 20), "OFF", gsLabel);
 
+                // 탈의 효과 사용
+                cfgw.dressUse = GUI.Toggle(new Rect(580 + 40, y, 80, 20), cfgw.dressUse, "탈의효과", gsToggle);
 
                 y = 30;
 
@@ -13472,9 +13483,9 @@ namespace CM3D2.VibeYourMaid.Plugin
                     if (bgID == 36 || bgID == 37)
                     {
 
-                        GUI.Label(new Rect(635, y, 200, 20), "【スポット移動】", gsLabel);
+                        GUI.Label(new Rect(635, y, 200, 20), "【スポット移動】", gsLabel);//장소 이동
 
-                        if (GUI.Button(new Rect(640, y + 25, 85, 20), "スポット１", gsButton))
+                        if (GUI.Button(new Rect(640, y + 25, 85, 20), "スポット１", gsButton))//명소 1
                         {
                             maid.transform.position = new Vector3(-2.81f, 0.6f, -3.76f);
                             man.transform.position = new Vector3(-2.81f, 0.6f, -3.76f);
@@ -13548,6 +13559,7 @@ namespace CM3D2.VibeYourMaid.Plugin
 
         //-------------------------------------------------
         //新 エンパイアズライフ関係------------------------
+        //새로운 엠파이어 즈 라이프 관계------------------------
 
         private bool el_Overwrite = false;
         private int elErrer = 0;
@@ -13738,7 +13750,7 @@ namespace CM3D2.VibeYourMaid.Plugin
             }
         }
 
-        //ライフイベントをXMLファイルに保存する
+        //ライフイベントをXMLファイルに保存する 라이프 이벤트를 XML 파일에 저장
         private void LifeEventsSave()
         {
 
@@ -13746,13 +13758,13 @@ namespace CM3D2.VibeYourMaid.Plugin
             string folder = @"Sybaris\UnityInjector\Config\VibeYourMaid\EmpiresLifeSet\" + ELE.bgCode + @"\";
             if (!System.IO.Directory.Exists(folder))
             {
-                //ない場合はフォルダ作成
+                //ない場合はフォルダ作成 없으면 폴더 만들기
                 System.IO.DirectoryInfo di = System.IO.Directory.CreateDirectory(folder);
             }
 
 
             if (ELE.evName == "" || ELE.bgCode == "")
-            {  //イベント名が空白の場合保存しない
+            {  //イベント名が空白の場合保存しない 이벤트 이름이 비어 있으면 저장하지
                 elErrer = 1;
 
             }
@@ -13836,7 +13848,7 @@ namespace CM3D2.VibeYourMaid.Plugin
         //-------------------------------------------------
         //エンパイアズライフ関係---------------------------
 
-        //エンパイアズライフ用変数
+        //エンパイアズライフ用変数 엠파이어 즈 라이프위한 변수
         private int bgID = 0;
         private int lifeStart = 0;
         private int danceFlag = 0;
@@ -13906,6 +13918,7 @@ namespace CM3D2.VibeYourMaid.Plugin
         private List<int[]> holidayMaid = new List<int[]>();
 
         //モーション , PX , PY , PZ , EX , EY , EZ , 表情 , フェイスブレンド , 床調整 , 着衣 , 視線 , ダンスBGM , ボイスセット , ボイス再生距離 , ボイス再生間隔 , メイドアイテム, NTRブロック
+        //모션       , PX , PY , PZ , EX , EY , EZ   표정 , 페이스 혼합     ,바닥조정 , 착의 , 시선, 댄스 BGM, 음성 세트, 음성 재생 거리, 음성 재생 간격 메이드 상품, NTR 블록
         private string[][] life_f = new string[][]{
           new string[] {"" , "0" , "0" , "0" , "0" , "0" , "0" , "" , "" , "0" , "0" , "0" , "" , "" , "" , "" , "" , "0" },
           new string[] {"" , "0" , "0" , "0" , "0" , "0" , "0" , "" , "" , "0" , "0" , "0" , "" , "" , "" , "" , "" , "0" },
@@ -13964,7 +13977,7 @@ namespace CM3D2.VibeYourMaid.Plugin
 	};
 
 
-        //00：執務室 シーン設定
+        //00：執務室 シーン設定 집무실 장면 설정
         private string[][] life00_01f = new string[][]{
       new string[] { "soji_mop.anm|soji_mop_kaiwa.anm" , "-1.3" , "0" , "1" , "0" , "312" , "0" , "通常|微笑み|にっこり|思案伏せ目|発情|困った|疑問|誘惑" , "頬０涙０" , "0" , "0" , "0" , "" , "掃除" , "-1" , "-1" , "handitem,HandItemR_Mop_I_.menu" , "0" },
       new string[] { "soji_zoukin.anm|soji_zoukin_kaiwa_l.anm" , "1" , "0" , "1.5" , "0" , "65" , "0" , "通常|微笑み|にっこり|思案伏せ目|発情|困った|疑問|誘惑" , "頬０涙０" , "0" , "0" , "0" , "" , "掃除" , "-1" , "-1" , "handitem,HandItemR_Zoukin2_I_.menu" , "0" },
@@ -14009,9 +14022,18 @@ namespace CM3D2.VibeYourMaid.Plugin
     };
 
 
-        //03：サロン（夜） シーン設定
+        //03：サロン（夜） シーン設定 살롱 (밤) 장면 설정
         private string[][] life03_01f = new string[][]{
-      new string[] {"dance_cm3d_001_f1.anm","0","0","0","0","0","0","笑顔|にっこり|ドヤ顔|ウインク照れ|引きつり笑顔|微笑み|発情|誘惑|思案伏せ目|疑問","頬０涙０","0" , "0" , "1" , "entrancetoyou_short.ogg" , "" , "-1" , "-1" , "" , "0" },
+      new string[] {"dance_cm3d_001_f1.anm",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "笑顔|にっこり|ドヤ顔|ウインク照れ|引きつり笑顔|微笑み|発情|誘惑|思案伏せ目|疑問",
+          "頬０涙０",
+          "0" , "0" , "1" , "entrancetoyou_short.ogg" , "" , "-1" , "-1" , "" , "0" },
       new string[] {"kaiwa_sofa_kangaeruB_taiki_f.anm|kaiwa_sofa_1_f.anm|kaiwa_sofa_kangaeru_f_ONCE_.anm|kaiwa_sofa_noridasu_2_f_ONCE_.anm|kaiwa_sofa_teawaseA_taiki1_f.anm|kaiwa_sofa_teawase_taiki_f.anm|kaiwa_sofa_tere_taiki_f.anm","-5.67","-1.45","7.91","0","106","0","通常|微笑み|笑顔|にっこり|優しさ|思案伏せ目|発情|誘惑","頬０涙０","-2" , "0" , "1" , "" , "会話01" , "-1" , "300" , "" , "0" },
       new string[] {"settai_aibu_2_f.anm|settai_aibu_3_f.anm","3.73","-1.46","11.48","0","205","0","エロ羞恥１|エロ羞恥２|興奮射精後１|エロ痛み２|エロ我慢３|まぶたギュ","頬２涙１","-2" , "0" , "2" , "" , "SEX_A" , "-1" , "0" , "" , "1" },
       new string[] {"om_furo_taimenzai_kiss_2_f.anm|om_furo_taimenzai_kiss_3_f.anm","5.73","-1.47","4.69","0","268","0","エロ羞恥２|エロ羞恥３|エロ好感３|興奮射精後１|発情|エロ興奮３|エロ期待","頬２涙１よだれ","-2" , "3" , "2" , "" , "SEX_A" , "-1" , "0" , "" , "1" }
@@ -15016,7 +15038,7 @@ namespace CM3D2.VibeYourMaid.Plugin
         private IEnumerator EmpiresLife()
         {
 
-            //スタート時及び場所移動時の処理
+            //スタート時及び場所移動時の処理 시작시 및 장소 이동시의 처리
             if (lifeStart == 1)
             {
 
@@ -15026,8 +15048,10 @@ namespace CM3D2.VibeYourMaid.Plugin
                 GameMain.Instance.SoundMgr.StopBGM(2f);
 
                 //シーンファイルの読み込み
+                //장면 파일로드
                 ElLoad(bgID);
-
+                Console.WriteLine(Name+".장면 파일로드:" + bgID);
+                                
                 //ライト設定
                 if (bgID == 32)
                 {
@@ -15116,7 +15140,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                     if (stockMaids[mn[bgID][i]].mem.Visible)
                     {
 
-                        //モーション変更
+                        //モーション変更 모션 변경
                         if (life_f[i][12] == "")
                         {
                             MaidSetMotion(life_f[i][0], stockMaids[mn[bgID][i]].mem, 0f, i);
@@ -15131,9 +15155,10 @@ namespace CM3D2.VibeYourMaid.Plugin
                         MaidSetFace(life_f[i][7], stockMaids[mn[bgID][i]].mem);
                         stockMaids[mn[bgID][i]].mem.FaceBlend(life_f[i][8]);
 
-                        //着衣の変更
-                        if (life_f[i][10] == "0")
-                        { //全着衣
+                        //着衣の変更 
+                        //착의 변경
+                        if (life_f[i][10] == "0" || !cfgw.dressUse)
+                        { //全着衣 전체 착의
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.wear, true);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.mizugi, true);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.onepiece, true);
@@ -15149,8 +15174,10 @@ namespace CM3D2.VibeYourMaid.Plugin
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.accKubi, true);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.accKubiwa, true);
                         }
-                        if (life_f[i][10] == "1")
-                        { //全裸
+                        if (life_f[i][10] == "1" && cfgw.dressUse)
+                        {
+                            //全裸
+                            //전라
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.wear, false);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.mizugi, false);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.onepiece, false);
@@ -15166,8 +15193,8 @@ namespace CM3D2.VibeYourMaid.Plugin
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.accKubi, false);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.accKubiwa, false);
                         }
-                        if (life_f[i][10] == "2")
-                        { //下着姿
+                        if (life_f[i][10] == "2" && cfgw.dressUse)
+                        {   //下着姿
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.wear, false);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.mizugi, true);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.onepiece, false);
@@ -15183,7 +15210,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.accKubi, false);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.accKubiwa, false);
                         }
-                        if (life_f[i][10] == "3")
+                        if (life_f[i][10] == "3" && cfgw.dressUse)
                         { //ノーパンノーブラ
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.wear, true);
                             stockMaids[mn[bgID][i]].mem.body0.SetMask(TBody.SlotID.mizugi, false);
@@ -15441,7 +15468,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                     }
 
 
-                    //表情変更処理
+                    //表情変更処理 표정 변경 처리
                     if (lifeTime3[i] <= 0)
                     {
                         //if((life_f[i][12] == "" && bgID != 32) || eldatui[i] == 0){
@@ -15898,6 +15925,7 @@ namespace CM3D2.VibeYourMaid.Plugin
         {
 
             GetStockMaids();
+            //メイドの数だけ重複しないランダム変数を作成
             var ary = Enumerable.Range(0, stockMaids.Count).OrderBy(n => Guid.NewGuid()).Take(stockMaids.Count).ToArray(); //メイドの数だけ重複しないランダム変数を作成
             bgC = 0;
             maidOver = false;
@@ -15959,6 +15987,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                 ElLoad(i);
 
                 //各シーンにランダムに並び替えたメイドを順番に配置する
+                //각 장면에 무작위로 정렬 메이드을 차례로 배치하기
                 for (int i2 = 0; i2 < 4; i2++)
                 {
                     if (life_f[i2][0] == "") continue;
@@ -15977,6 +16006,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                             ++ei;
                             if (exclusive.Count <= ei)
                             {
+                                //메이드 수가 한계에 도달하면 0으로 다시 반복 할
                                 ei = 0; //メイド数が限界に達した場合０に戻してループさせる
                                 exclusiveOver = true;
                             }
@@ -15994,6 +16024,7 @@ namespace CM3D2.VibeYourMaid.Plugin
                             ++fi;
                             if (free.Count <= fi)
                             {
+                                //메이드 수가 한계에 도달하면 0으로 다시 반복 할
                                 fi = 0; //メイド数が限界に達した場合０に戻してループさせる
                                 freeOver = true;
                             }
@@ -16002,7 +16033,9 @@ namespace CM3D2.VibeYourMaid.Plugin
 
                     }
                     else
-                    { //NTRブロック無効時
+                    {
+                        //NTRブロック無効時
+                        //NTR 차단 해제시
                         if (all.Count <= i2)
                         {
                             mn[i][i2] = -1;
@@ -16191,7 +16224,7 @@ namespace CM3D2.VibeYourMaid.Plugin
         }
 
 
-        //エンパイアズライフのシーン設定読み込み
+        //エンパイアズライフのシーン設定読み込み 엠파이어 즈 라이프 장면 설정 읽기
         private void ElLoad(int i)
         {
 
